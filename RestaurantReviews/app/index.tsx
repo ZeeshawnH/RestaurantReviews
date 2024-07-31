@@ -12,15 +12,17 @@ import {
 } from "react-native";
 import Restaurant from "./restaurant";
 import { Link } from "expo-router";
+import { useRestaurantContext } from "./RestaurantContext";
 
 export default function Index() {
+  const { restaurants } = useRestaurantContext();
   const heroImage = require("../assets/images/MeatAndBite.jpg");
 
   return (
     <View>
       <Pressable>
         <Link href="/restaurant">
-          <ThemedText>Meat & Bite</ThemedText>
+          <ThemedText>{restaurants[0].name}</ThemedText>
         </Link>
       </Pressable>
       <Text>Edit app/index.tsx to edit this screen</Text>

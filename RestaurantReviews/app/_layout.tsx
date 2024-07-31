@@ -1,10 +1,13 @@
 import { Stack } from "expo-router";
+import { RestaurantProvider } from "./RestaurantContext";
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="restaurant" />
-      <Stack.Screen name="index" options={{ headerShown: true }} />
-    </Stack>
+    <RestaurantProvider>
+      <Stack>
+        <Stack.Screen name="restaurant" />
+        <Stack.Screen name="index" options={{ headerShown: true }} />
+      </Stack>
+    </RestaurantProvider>
   );
 }
