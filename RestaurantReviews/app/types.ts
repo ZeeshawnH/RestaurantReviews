@@ -4,7 +4,7 @@ export type Review = {
   rating: number;
 };
 
-export type RestaurantProps = {
+export type Restaurant = {
   name: string;
   address: string;
   phone: string;
@@ -12,5 +12,6 @@ export type RestaurantProps = {
 };
 
 export type RestaurantContextType = {
-  restaurants: RestaurantProps[];
+  restaurants: Restaurant[];
+  getRestaurantByName: (name: string) => Restaurant | undefined;
 };

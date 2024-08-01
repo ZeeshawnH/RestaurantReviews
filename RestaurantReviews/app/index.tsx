@@ -10,9 +10,10 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import Restaurant from "./restaurant";
+import RestaurantScreen from "./restaurant";
 import { Link } from "expo-router";
 import { useRestaurantContext } from "./RestaurantContext";
+import { Restaurant } from "./types";
 
 export default function Index() {
   const { restaurants } = useRestaurantContext();
@@ -20,11 +21,19 @@ export default function Index() {
 
   return (
     <View>
-      <Pressable>
-        <Link href="/restaurant">
-          <ThemedText>{restaurants[0].name}</ThemedText>
-        </Link>
-      </Pressable>
+      {restaurants.map((restaurant: Restaurant, i: number) => (
+        <Pressable>
+          <Link
+            key={i}
+            href={{
+              pathname: "/restaurant",
+              params: { name: restaurant.name },
+            }}
+          >
+            <ThemedText>{restaurant.name}</ThemedText>
+          </Link>
+        </Pressable>
+      ))}
       <Text>Edit app/index.tsx to edit this screen</Text>
     </View>
   );

@@ -1,4 +1,4 @@
-import { RestaurantProps, Review } from "./types";
+import { Restaurant, Review } from "./types";
 
 const reviews: Review[] = [
   {
@@ -21,11 +21,11 @@ const reviews: Review[] = [
   },
 ];
 
-const MeatAndBite: RestaurantProps = {
+const MeatAndBite: Restaurant = {
   name: "Meat & Bite",
   address: "2908 Hillsborough St, Raleigh, NC, 27606",
   phone: "(919) 803-0025",
   reviews,
 };
 
-export const initialRestaurants: RestaurantProps[] = [MeatAndBite];
+export const initialRestaurants: Restaurant[] = [MeatAndBite];

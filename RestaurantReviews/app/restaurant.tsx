@@ -2,15 +2,17 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import React, { useContext } from "react";
+import { useLocalSearchParams } from "expo-router";
 import { Text, View, Image } from "react-native";
 import { useRestaurantContext } from "./RestaurantContext";
 
-export default function Restaurant() {
-  const { restaurants } = useRestaurantContext();
+export default function RestaurantScreen() {
+  const { name } = useLocalSearchParams();
+  const { getRestaurantByName } = useRestaurantContext();
 
   const headerImage = require("../assets/images/MeatAndBite.jpg");
 
-  const reviews = restaurants[0].reviews;
+  const restaurant = getRestaurantByName(name as string);
 
   const displayStars = (rating: number) => {
     let stars = "";
@@ -20,7 +22,7 @@ export default function Restaurant() {
     return stars;
   };
 
-  const displayReviews = reviews.map((review, i) => (
+  const reviews = restaurant?.reviews.map((review, i) => (
     <ThemedView
       style={{
         padding: 8,
@@ -31,7 +33,7 @@ export default function Restaurant() {
     >
       <ThemedText type="defaultSemiBold">{review.name}</ThemedText>
       <ThemedText>{review.review}</ThemedText>
-      <ThemedText>⭐️⭐️⭐️⭐️⭐️</ThemedText>
+      <ThemedText>{displayStars(review.rating)}</ThemedText>
     </ThemedView>
   ));
 
@@ -41,16 +43,18 @@ export default function Restaurant() {
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
       <ThemedView>
-        <ThemedText type="title">{restaurants[0].name}</ThemedText>
-        <ThemedText type="defaultSemiBold">{restaurants[0].address}</ThemedText>
+        <ThemedText type="title">{restaurant?.name}</ThemedText>
+        <ThemedText type="defaultSemiBold">{restaurant?.address}</ThemedText>
         <ThemedText type="link">(919) 803-0025</ThemedText>
       </ThemedView>
-      <ThemedView style={{ gap: 4 }}>
-        <ThemedText type="subtitle" style={{ paddingVertical: 4 }}>
-          What People Are Saying
-        </ThemedText>
-        {displayReviews}
-      </ThemedView>
+      {restaurant?.reviews && restaurant?.reviews.length > 0 && (
+        <ThemedView style={{ gap: 4 }}>
+          <ThemedText type="subtitle" style={{ paddingVertical: 4 }}>
+            What People Are Saying
+          </ThemedText>
+          {reviews}
+        </ThemedView>
+      )}
     </ParallaxScrollView>
   );
 }

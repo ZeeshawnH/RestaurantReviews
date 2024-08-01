@@ -5,7 +5,7 @@ import {
   useContext,
   useState,
 } from "react";
-import { RestaurantContextType, RestaurantProps, Review } from "./types";
+import { RestaurantContextType, Restaurant, Review } from "./types";
 import { initialRestaurants } from "./mocks";
 
 const RestaurantContext = createContext<RestaurantContextType | undefined>(
@@ -28,10 +28,14 @@ type RestaurantProviderProps = {
 
 export const RestaurantProvider = ({ children }: RestaurantProviderProps) => {
   const [restaurants, setRestaurants] =
-    useState<RestaurantProps[]>(initialRestaurants);
+    useState<Restaurant[]>(initialRestaurants);
+
+  const getRestaurantByName = (name: string) => {
+    return restaurants.find((restaurant) => restaurant.name === name);
+  };
 
   return (
-    <RestaurantContext.Provider value={{ restaurants }}>
+    <RestaurantContext.Provider value={{ restaurants, getRestaurantByName }}>
       {children}
     </RestaurantContext.Provider>
   );
